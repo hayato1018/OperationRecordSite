@@ -1,11 +1,26 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-    <title>ホーム</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ホーム画面</title>
+    <link rel="stylesheet" href="{% static 'app/style.css' %}">
 </head>
 <body>
-    <h1>ホーム画面</h1>
-    <a href="{% url 'master' %}"><button>マスタ設定画面へ</button></a>
-    <a href="{% url 'output' %}"><button>出力実行画面へ</button></a>
+    <!-- ホームへ戻るリンク（他の画面へ遷移するときも必要なら残します） -->
+    <a href="{% url 'home' %}" class="home-link">ホームへ戻る</a>
+
+    <div class="container">
+        <h1>ホーム画面</h1>
+        <p>マスタ設定画面や出力実行画面へ遷移するボタンを配置します。</p>
+        <a href="{% url 'master' %}" class="btn">マスタ設定画面へ</a>
+        <a href="{% url 'output' %}" class="btn">出力実行画面へ</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 マスタ設定システム</p>
+    </footer>
 </body>
 </html>

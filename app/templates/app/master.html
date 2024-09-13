@@ -1,51 +1,39 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>マスタ設定画面</title>
-    <style>
-        .home-link {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            text-decoration: none;
-            background-color: #f0f0f0;
-            padding: 5px 10px;
-            border-radius: 5px;
-            color: #000;
-        }
-        .home-link:hover {
-            background-color: #ddd;
-        }
-        .container {
-            display: flex;
-            justify-content: space-between;
-        }
-        .form-container, .list-container {
-            width: 45%;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'app/style.css' %}">
 </head>
 <body>
-    <a href="{% url 'home' %}" class="home-link">ホームへ戻る</a> <!-- ホームへ戻るリンク -->
 
-    <h1>マスタ設定画面</h1>
+    <!-- ホームへ戻るリンク -->
+    <a href="{% url 'home' %}" class="home-link">ホームへ戻る</a>
+
     <div class="container">
+        <h1>マスタ設定画面</h1>
+
+        <!-- フォーム -->
         <div class="form-container">
             <form method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit">設定を保存</button>
+                <button type="submit" class="btn">設定を保存</button>
             </form>
         </div>
 
+        <!-- 一覧表示 -->
         <div class="list-container">
             <h2>登録されているマスタ情報一覧</h2>
             <ul>
                 {% for item in master_list %}
                     <li>
                         {{ item.project_number }} - {{ item.phase_number }} - {{ item.search_text }}
-                        <a href="{% url 'edit_master' item.pk %}">編集</a> |
-                        <a href="{% url 'delete_master' item.pk %}" onclick="return confirm('本当に削除しますか？')">削除</a>
+                        <a href="{% url 'edit_master' item.pk %}" class="btn">編集</a>
+                        <a href="{% url 'delete_master' item.pk %}" class="btn" onclick="return confirm('本当に削除しますか？')">削除</a>
                     </li>
                 {% empty %}
                     <li>まだ登録されている情報がありません。</li>
@@ -53,5 +41,10 @@
             </ul>
         </div>
     </div>
+
+    <footer>
+        <p>&copy; 2024 マスタ設定システム</p>
+    </footer>
+
 </body>
 </html>

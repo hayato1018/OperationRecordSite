@@ -1,0 +1,113 @@
+/* 全体の基本設定 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #e0f7fa;
+    /* 背景色: 薄いブルー */
+    color: #333;
+    /* テキスト: 濃いグレー */
+    margin: 0;
+    padding: 0;
+}
+
+/* コンテナ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ヘッダー */
+h1,
+h2 {
+    color: #00796b;
+    /* タイトル: 濃い緑 */
+}
+
+/* ボタン */
+button,
+.btn {
+    background-color: #80deea;
+    /* ボタン: ライトグリーン */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover,
+.btn:hover {
+    background-color: #4dd0e1;
+    /* ボタン: ホバー時の色 */
+}
+
+/* リンク */
+a {
+    color: #7b1fa2;
+    /* リンク: パープル */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #4a148c;
+    /* リンク: ホバー時の色 */
+}
+
+/* フォーム */
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #bdbdbd;
+    border-radius: 5px;
+}
+
+/* ヘッダーのリンク（ホームへ戻る） */
+.home-link {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-decoration: none;
+    background-color: #80deea;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.home-link:hover {
+    background-color: #4dd0e1;
+}
+
+/* テキストリスト */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #ffffff;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+li a {
+    margin-left: 10px;
+}
+
+/* フッター */
+footer {
+    background-color: #00796b;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
