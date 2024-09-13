@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>マスタ設定画面</title>
+    <style>
+        .home-link {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            text-decoration: none;
+            background-color: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #000;
+        }
+        .home-link:hover {
+            background-color: #ddd;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-container, .list-container {
+            width: 45%;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'home' %}" class="home-link">ホームへ戻る</a> <!-- ホームへ戻るリンク -->
+
+    <h1>マスタ設定画面</h1>
+    <div class="container">
+        <div class="form-container">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">設定を保存</button>
+            </form>
+        </div>
+
+        <div class="list-container">
+            <h2>登録されているマスタ情報一覧</h2>
+            <ul>
+                {% for item in master_list %}
+                    <li>
+                        {{ item.project_number }} - {{ item.phase_number }} - {{ item.search_text }}
+                        <a href="{% url 'edit_master' item.pk %}">編集</a> |
+                        <a href="{% url 'delete_master' item.pk %}" onclick="return confirm('本当に削除しますか？')">削除</a>
+                    </li>
+                {% empty %}
+                    <li>まだ登録されている情報がありません。</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
