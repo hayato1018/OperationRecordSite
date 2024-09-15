@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マスタデータ確認</title>
+    <link rel="stylesheet" href="{% static 'app/style.css' %}">
+</head>
+<body>
+    <!-- ホームへ戻るリンク -->
+    <a href="{% url 'home' %}" class="home-link">ホームへ戻る</a>
+
+    <div class="container">
+        <h1>マスタデータの確認</h1>
+
+        <!-- マスタデータ一覧をテーブルで表示 -->
+        <div class="list-container">
+            <h2>登録されているマスタ情報一覧</h2>
+            <ul>
+                {% for item in master_list %}
+                    <li>
+                        {{ item.project_number }} - {{ item.phase_number }} - {{ item.search_text }}
+                    </li>
+                {% empty %}
+                    <li>まだ登録されている情報がありません。</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- ボタンで処理を分岐 -->
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" name="output" class="btn">出力する</button>
+            <button type="submit" name="edit_master" class="btn">マスタ設定へ</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 マスタ設定システム</p>
+    </footer>
+
+</body>
+</html>

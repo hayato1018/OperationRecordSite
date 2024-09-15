@@ -43,6 +43,25 @@ def edit_master(request, pk):
 
     return render(request, 'app/edit_master.html', {'form': form})
 
+# 確認画面のビュー
+def confirm_master(request):
+    master_list = MasterData.objects.all()
+
+    if request.method == "POST":
+        form = MasterForm(request.POST)
+        if form.is_valid():
+            MasterData.objects.create(
+                project_number=form.cleaned_data['project_number'],
+                phase_number=form.cleaned_data['phase_number'],
+                search_text=form.cleaned_data['search_text'],
+            )
+        if 'output' in request.POST:
+            return redirect('output')  # 出力実行画面へ遷移
+        elif 'edit_master' in request.POST:
+            return redirect('master')  # マスタ設定画面へ遷移
+
+    return render(request, 'app/confirm_master.html', {'master_list': master_list})
+
 # 出力実行画面のビュー
 def output(request):
     return render(request, 'app/output.html')
