@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import MasterData
 from .forms import MasterForm
+from .controller.util import export_master_data_to_csv
 
 # ホーム画面のビュー
 def home(request):
@@ -66,4 +67,8 @@ def confirm_master(request):
 
 # 出力実行画面のビュー
 def output(request):
+    if request.method == 'POST':
+        # ボタンが押されたらCSVファイルをダウンロード
+        return export_master_data_to_csv()
+    # 通常の画面表示
     return render(request, 'app/output.html')

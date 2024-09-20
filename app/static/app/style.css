@@ -164,3 +164,18 @@ table tbody td {
 table thead th {
     font-weight: bold;
 }
+
+/* ダウンロードボタンを大きめにするスタイル */
+.btn-large {
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-large:hover {
+    background-color: #45a049;
+}
