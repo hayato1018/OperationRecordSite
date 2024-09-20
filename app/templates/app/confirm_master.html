@@ -14,7 +14,25 @@
 
     <div class="container">
         <h1>マスタデータの確認</h1>
-
+            <!-- ボタンで処理を分岐 -->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="file" id="file-input">
+                <button type="submit" name="output" class="btn" onclick="return validateFile()">出力する</button>
+                <button type="submit" name="edit_master" class="btn">マスタ設定へ</button>
+            </form>
+            
+            <script>
+                // 「出力する」ボタンのときにのみファイル選択を確認
+                function validateFile() {
+                    const fileInput = document.getElementById('file-input');
+                    if (fileInput.files.length === 0) {
+                        alert('ファイルを選択してください。');
+                        return false;  // フォーム送信をキャンセル
+                    }
+                    return true;  // フォーム送信を許可
+                }
+            </script>
         <!-- マスタデータ一覧をテーブルで表示 -->
         <div class="list-container">
             <h2>登録されているマスタ情報一覧</h2>
@@ -42,27 +60,6 @@
                 </tbody>
             </table>
         </div>
-        
-
-        <!-- ボタンで処理を分岐 -->
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="file" name="file" id="file-input">
-            <button type="submit" name="output" class="btn" onclick="return validateFile()">出力する</button>
-            <button type="submit" name="edit_master" class="btn">マスタ設定へ</button>
-        </form>
-        
-        <script>
-            // 「出力する」ボタンのときにのみファイル選択を確認
-            function validateFile() {
-                const fileInput = document.getElementById('file-input');
-                if (fileInput.files.length === 0) {
-                    alert('ファイルを選択してください。');
-                    return false;  // フォーム送信をキャンセル
-                }
-                return true;  // フォーム送信を許可
-            }
-        </script>
     </div>
 
     <footer>
