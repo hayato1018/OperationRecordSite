@@ -19,6 +19,7 @@ def export_master_data_to_csv():
 
     return response
 
+# '01'の列を検索して、その列番号を返す
 def search_start_date_col(ws, keyword):
     result = 7
     for col in ws.columns:
@@ -28,9 +29,23 @@ def search_start_date_col(ws, keyword):
             except:
                 continue
             if value == keyword:
-                retult = cell.column
+                result = cell.column
     return result
 
+# '01'の行を検索して、その行番号を返す
+def search_start_date_row(ws, keyword):
+    result = 2
+    for row in ws.rows:
+        for cell in row:
+            try:
+                value = str(cell.value)
+            except:
+                continue
+            if value == keyword:
+                result = cell.row
+    return result
+
+# 主な処理
 def operation_record_export(input_book, year_month_str):
     wb = openpyxl.load_workbook(input_book, data_only=True)
     ws = wb['澤村']
@@ -38,4 +53,5 @@ def operation_record_export(input_book, year_month_str):
     # TODO ここに処理を追加
     year_month = datetime.strptime(year_month_str, '%Y-%m').strftime('%Y_%m')
     start_date_col = search_start_date_col(ws, '01')
-    print(year_month, start_date_col)
+    start_date_row = search_start_date_row(ws, '01')
+
