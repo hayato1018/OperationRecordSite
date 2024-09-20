@@ -111,3 +111,56 @@ footer {
     width: 100%;
     bottom: 0;
 }
+
+/* テーブルの全体スタイル */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1.2em;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* テーブルヘッダーのスタイル */
+table thead th {
+    background-color: #f2f2f2;
+    color: #333;
+    text-align: left;
+    padding: 15px 20px;
+    /* パディングを広げる */
+    border-bottom: 2px solid #ddd;
+}
+
+/* テーブルボディのスタイル */
+table tbody td {
+    padding: 15px 20px;
+    /* パディングを広げる */
+    border-bottom: 1px solid #ddd;
+}
+
+/* テーブルの行に交互に背景色をつける */
+table tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9;
+}
+
+/* テーブル行のホバー時のスタイル */
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* テーブル全体を中央に揃える */
+.list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* テーブル内のテキストスタイル */
+table tbody td {
+    color: #555;
+}
+
+/* ヘッダーを強調 */
+table thead th {
+    font-weight: bold;
+}
