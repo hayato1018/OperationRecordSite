@@ -1,32 +1,35 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-    <title>マスタ情報の編集</title>
-    <style>
-        .home-link {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            text-decoration: none;
-            background-color: #f0f0f0;
-            padding: 5px 10px;
-            border-radius: 5px;
-            color: #000;
-        }
-        .home-link:hover {
-            background-color: #ddd;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マスタ編集画面</title>
+    <link rel="stylesheet" href="{% static 'app/style.css' %}">
 </head>
 <body>
-    <a href="{% url 'home' %}" class="home-link">ホームへ戻る</a> <!-- ホームへ戻るリンク -->
 
-    <h1>マスタ情報の編集</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">更新する</button>
-    </form>
-    <a href="{% url 'master' %}">マスタ設定に戻る</a>
+    <!-- ホームへ戻るリンク -->
+    <a href="{% url 'home' %}" class="home-link">ホームへ戻る</a>
+
+    <div class="container">
+        <h1>マスタ編集画面</h1>
+
+        <!-- フォーム -->
+        <div class="form-container">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn">編集を保存</button>
+                <a href="{% url 'master' %}" class="btn">マスタ設定画面へ戻る</a>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 実績登録用データ作成サイト</p>
+    </footer>
+
 </body>
 </html>

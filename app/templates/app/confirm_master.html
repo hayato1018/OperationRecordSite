@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マスタデータ確認</title>
+    <link rel="stylesheet" href="{% static 'app/style.css' %}">
+</head>
+<body>
+    <!-- ホームへ戻るリンク -->
+    <a href="{% url 'home' %}" class="home-link">ホームへ戻る</a>
+
+    <div class="container">
+        <h1>マスタデータの確認</h1>
+            <!-- ボタンで処理を分岐 -->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="file" id="file-input">
+                <button type="submit" name="output" class="btn" onclick="return validateFile()">出力する</button>
+                <button type="submit" name="edit_master" class="btn">マスタ設定へ</button>
+            </form>
+            
+            <script>
+                // 「出力する」ボタンのときにのみファイル選択を確認
+                function validateFile() {
+                    const fileInput = document.getElementById('file-input');
+                    if (fileInput.files.length === 0) {
+                        alert('ファイルを選択してください。');
+                        return false;  // フォーム送信をキャンセル
+                    }
+                    return true;  // フォーム送信を許可
+                }
+            </script>
+        <!-- マスタデータ一覧をテーブルで表示 -->
+        <div class="list-container">
+            <h2>登録されているマスタ情報一覧</h2>
+        
+            <table>
+                <thead>
+                    <tr>
+                        <th>プロジェクト番号</th>
+                        <th>フェーズ番号</th>
+                        <th>検索文字</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in master_list %}
+                        <tr>
+                            <td>{{ item.project_number }}</td>
+                            <td>{{ item.phase_number }}</td>
+                            <td>{{ item.search_text }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3">まだ登録されている情報がありません。</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 実績登録用データ作成サイト</p>
+    </footer>
+
+</body>
+</html>
