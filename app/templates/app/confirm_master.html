@@ -32,6 +32,7 @@
         <!-- ボタンで処理を分岐 -->
         <form method="POST">
             {% csrf_token %}
+            <input type="file" name="file" required>
             <button type="submit" name="output" class="btn">出力する</button>
             <button type="submit" name="edit_master" class="btn">マスタ設定へ</button>
         </form>
