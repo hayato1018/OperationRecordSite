@@ -14,6 +14,7 @@ def master(request):
         form = MasterForm(request.POST)
         if form.is_valid():
             MasterData.objects.create(
+                project_name=form.cleaned_data['project_name'],
                 project_number=form.cleaned_data['project_number'],
                 phase_number=form.cleaned_data['phase_number'],
                 search_text=form.cleaned_data['search_text'],
@@ -51,6 +52,7 @@ def confirm_master(request):
         form = MasterForm(request.POST)
         if form.is_valid():
             MasterData.objects.create(
+                project_name=form.cleaned_data['project_name'],
                 project_number=form.cleaned_data['project_number'],
                 phase_number=form.cleaned_data['phase_number'],
                 search_text=form.cleaned_data['search_text'],
