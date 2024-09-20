@@ -18,8 +18,9 @@ def export_master_data_to_csv():
 
     return response
 
-def operation_record_export(input_book):
+def operation_record_export(input_book, year_month):
     wb = openpyxl.load_workbook(input_book, data_only=True)
     ws = wb['澤村']
+    print(year_month)
 
     # TODO ここに処理を追加

@@ -60,8 +60,9 @@ def confirm_master(request):
             )
         if 'output' in request.POST:
             input_book = request.FILES.get('input_book')
+            year_month = request.POST.get('year_month')
             if input_book:
-                operation_record_export(input_book)
+                operation_record_export(input_book, year_month)
             return redirect('output')  # 出力実行画面へ遷移
         elif 'edit_master' in request.POST:
             return redirect('master')  # マスタ設定画面へ遷移
