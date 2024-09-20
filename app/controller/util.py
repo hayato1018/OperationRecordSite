@@ -19,5 +19,7 @@ def export_master_data_to_csv():
     return response
 
 def operation_record_export(input_book):
-    workbook = openpyxl.load_workbook(input_book)
-    print(workbook.sheetnames)
+    wb = openpyxl.load_workbook(input_book, data_only=True)
+    ws = wb['澤村']
+
+    # TODO ここに処理を追加
