@@ -19,6 +19,7 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <input type="file" name="input_book" id="file-input" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                <input type="month" name="year_month" required><br><br>
                 <button type="submit" name="output" class="btn" onclick="return validateFile()">出力する</button>
                 <button type="submit" name="edit_master" class="btn">マスタ設定へ</button>
             </form>
