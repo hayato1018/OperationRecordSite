@@ -1,6 +1,7 @@
 import csv
 from django.http import HttpResponse
 from ..models import MasterData
+import openpyxl
 
 def export_master_data_to_csv():
     # CSVのHTTPレスポンスを作成
@@ -16,3 +17,7 @@ def export_master_data_to_csv():
         writer.writerow([data.project_name, data.project_number, data.phase_number, data.search_text])
 
     return response
+
+def operation_record_export(input_book):
+    workbook = openpyxl.load_workbook(input_book)
+    print(workbook.sheetnames)
