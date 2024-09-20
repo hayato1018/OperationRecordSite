@@ -1,8 +1,11 @@
 import csv
 from django.http import HttpResponse
+import openpyxl.utils
 from ..models import MasterData
 import openpyxl
 from datetime import datetime
+
+master_list = MasterData.objects.all()
 
 def export_master_data_to_csv():
     # CSVのHTTPレスポンスを作成
@@ -45,6 +48,21 @@ def search_start_date_row(ws, keyword):
                 result = cell.row
     return result
 
+# 検索文字のある行を取得し、キーにプロジェクト番号、値にプロジェクト名、フェーズ番号、検索文字のある行を持つ辞書を作成
+def get_search_text_dict(ws):
+    search_text_dict = {}
+    
+    for row in ws.iter_rows(min_row=2, max_row=200, min_col=1, max_col=200):
+        for col in row:
+            for master_data in master_list:
+                if col.value == master_data.search_text:
+                    project_number = master_data.project_number
+                    project_name = master_data.project_name
+                    phase_number = master_data.phase_number
+                    search_text = openpyxl.utils.cell.coordinate_from_string(col.coordinate)[1]
+                    search_text_dict.update({project_number: [project_name, phase_number, search_text]})
+    return search_text_dict
+
 # 主な処理
 def operation_record_export(input_book, year_month_str):
     wb = openpyxl.load_workbook(input_book, data_only=True)
@@ -54,4 +72,8 @@ def operation_record_export(input_book, year_month_str):
     year_month = datetime.strptime(year_month_str, '%Y-%m').strftime('%Y_%m')
     start_date_col = search_start_date_col(ws, '01')
     start_date_row = search_start_date_row(ws, '01')
+
+    
+    search_text_dict = get_search_text_dict(ws)
+    print(search_text_dict)
 
