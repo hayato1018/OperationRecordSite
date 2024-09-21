@@ -14,6 +14,11 @@
 
     <div class="container">
         <h1>マスタデータの確認</h1>
+        {% if not internal_task_exists %}
+            <div class="alert">
+                <p>(必須) プロジェクト名 : 社内雑務 をマスタ設定してください。</p>
+            </div>
+         {% endif %}
             <!-- ボタンで処理を分岐 -->
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}

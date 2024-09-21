@@ -63,6 +63,18 @@ def get_search_text_dict(ws):
                     search_text_dict.update({project_number: [project_name, phase_number, search_text]})
     return search_text_dict
 
+def create_csv_rows(ws, row, col, work_day, order_no, phase_no):
+    work_day_str = work_day.strftime('%Y/%m/%d')
+    time_cell = ws.cell(row, col).value
+    times = None
+    #if order_no != (社内雑務):
+    #    if time_cell:
+    #        times = time_cell
+    #    else:
+    #        return
+    #else:
+    
+
 # 主な処理
 def operation_record_export(input_book, year_month_str):
     wb = openpyxl.load_workbook(input_book, data_only=True)
@@ -75,5 +87,5 @@ def operation_record_export(input_book, year_month_str):
 
     
     search_text_dict = get_search_text_dict(ws)
-    print(search_text_dict)
+
 

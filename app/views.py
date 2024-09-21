@@ -35,20 +35,25 @@ def delete_master(request, pk):
 # マスタ設定画面-編集機能のビュー
 def edit_master(request, pk):
     master = get_object_or_404(MasterData, pk=pk)
+
     if request.method == 'POST':
         form = MasterForm(request.POST, instance=master)
         if form.is_valid():
             form.save()
             return redirect('master')
+
     else:
         form = MasterForm(instance=master)
+
+        if master.project_name == "社内雑務":
+            form.fields['project_name'].widget.attrs['readonly'] = True
 
     return render(request, 'app/edit_master.html', {'form': form})
 
 # 確認画面のビュー
 def confirm_master(request):
+    internal_task_exists = MasterData.objects.filter(project_name="社内雑務").exists()
     master_list = MasterData.objects.all()
-
     if request.method == "POST":
         form = MasterForm(request.POST)
         if form.is_valid():
@@ -67,7 +72,10 @@ def confirm_master(request):
         elif 'edit_master' in request.POST:
             return redirect('master')  # マスタ設定画面へ遷移
 
-    return render(request, 'app/confirm_master.html', {'master_list': master_list})
+    return render(request, 'app/confirm_master.html', {
+        'master_list': master_list,
+        'internal_task_exists': internal_task_exists
+    })
 
 # 出力実行画面のビュー
 def output(request):

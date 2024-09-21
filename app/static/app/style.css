@@ -179,3 +179,13 @@ table thead th {
 .btn-large:hover {
     background-color: #45a049;
 }
+
+/* アラートメッセージのスタイル */
+.alert {
+    background-color: #ffdddd;
+    color: #d8000c;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #d8000c;
+    border-radius: 5px;
+}
