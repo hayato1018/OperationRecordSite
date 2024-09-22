@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import MasterData
 from .forms import MasterForm
-from .controller.util import export_master_data_to_csv, operation_record_export
+from .controller.util import MakeCSV
 
 # ホーム画面のビュー
 def home(request):
@@ -67,7 +67,11 @@ def confirm_master(request):
             input_book = request.FILES.get('input_book')
             year_month = request.POST.get('year_month')
             if input_book:
-                operation_record_export(input_book, year_month)
+                # Make(input_book)
+                csv_maker = MakeCSV(input_book)
+                csv_maker.operation_record_export(year_month)
+                #csv_maker.operation_record_export(year_month)
+                csv_maker.export_master_data_to_csv()
             return redirect('output')  # 出力実行画面へ遷移
         elif 'edit_master' in request.POST:
             return redirect('master')  # マスタ設定画面へ遷移
