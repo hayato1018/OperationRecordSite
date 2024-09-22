@@ -18,14 +18,16 @@
             <div class="alert">
                 <p>(必須) プロジェクト名 : 社内雑務 をマスタ設定してください。</p>
             </div>
-         {% endif %}
+        {% endif %}
             <!-- ボタンで処理を分岐 -->
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <input type="file" name="input_book" id="file-input" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
                 <input type="month" name="year_month"><br><br>
-                <button type="submit" name="output" class="btn" onclick="return validateFile()">出力する</button>
+                {% if internal_task_exists %}
+                    <button type="submit" name="output" class="btn" onclick="return validateFile()">出力する</button>
+                {% endif %}
                 <button type="submit" name="edit_master" class="btn">マスタ設定へ</button>
             </form>
             
