@@ -1,3 +1,6 @@
+import os
+from django.conf import settings
+from django.http import FileResponse,HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import MasterData
 from .forms import MasterForm
@@ -67,12 +70,10 @@ def confirm_master(request):
             input_book = request.FILES.get('input_book')
             year_month = request.POST.get('year_month')
             if input_book:
-                # Make(input_book)
-                csv_maker = MakeCSV(input_book)
-                csv_maker.operation_record_export(year_month)
-                #csv_maker.operation_record_export(year_month)
-                csv_maker.export_master_data_to_csv()
-            return redirect('output')  # 出力実行画面へ遷移
+                make_csv = MakeCSV(input_book)
+                make_csv.operation_record_export(year_month)
+                make_csv.export_master_data_to_csv()
+                return redirect('output')  # 出力実行画面へ遷移
         elif 'edit_master' in request.POST:
             return redirect('master')  # マスタ設定画面へ遷移
 
@@ -84,7 +85,22 @@ def confirm_master(request):
 # 出力実行画面のビュー
 def output(request):
     if request.method == 'POST':
-        # ボタンが押されたらCSVファイルをダウンロード
-        return export_master_data_to_csv()
-    # 通常の画面表示
+        output_dir = os.path.join(settings.BASE_DIR, 'output')
+        file_path = os.path.join(output_dir, 'master_data.csv')  # ファイル名は既に作成されたものを想定
+        if os.path.exists(file_path):
+            # ダウンロード用のレスポンスを作成
+            response = HttpResponse(
+                open(file_path, 'rb').read(),
+                content_type='text/csv'
+            )
+            response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+
+            os.remove(file_path)
+
+            return response
+        else:
+            # ファイルが存在しない場合のエラーメッセージ
+            return HttpResponse("CSVファイルが存在しません。")
+    
+    # POSTリクエストでない場合の通常画面表示
     return render(request, 'app/output.html')

@@ -1,4 +1,6 @@
 import csv
+import os
+from django.conf import settings
 from django.http import HttpResponse
 import openpyxl.utils
 from ..models import MasterData
@@ -19,19 +21,18 @@ class MakeCSV:
         self.ws = self.wb['澤村']
 
     def export_master_data_to_csv(self):
-        # CSVのHTTPレスポンスを作成
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="master_data.csv"'
-
-        writer = csv.writer(response)
-        # ヘッダー行を書き込む
-        writer.writerow(['プロジェクト名', 'プロジェクト番号', 'フェーズ番号', '検索文字'])
-
-        # DBからマスタデータを取得してCSVに書き込む
-        for data in MasterData.objects.all():
-            writer.writerow([data.project_name, data.project_number, data.phase_number, data.search_text])
-
-        return response
+        output_dir = os.path.join(settings.BASE_DIR, 'output')
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        
+        file_path = os.path.join(output_dir, 'master_data.csv')
+        
+        with open(file_path, mode='w', newline='', encoding='utf-8') as file:
+            writer = csv.writer(file)
+            writer.writerow(['プロジェクト名', 'プロジェクト番号', 'フェーズ番号', '検索文字'])
+            
+            for data in MasterData.objects.all():
+                writer.writerow([data.project_name, data.project_number, data.phase_number, data.search_text])
 
     # '01'の列を検索して、その列番号を返す
     def search_start_date_col(self, keyword):
@@ -79,12 +80,16 @@ class MakeCSV:
         time_cell = self.ws.cell(row, col).value
         times = None
 
-        if order_no != (self.master_list.filter(project_name='社内雑務').first()).project_number:
+        if order_no != (self.master_list.filter(project_name='自社作業').first()).project_number:
             if time_cell:
                 times = time_cell
             else:
                 return
-    #else:
+    # else:
+    #     if self.ws.cell(row, col).value is None or 0:
+    #         return
+    # 自社作業の時間から各社内業務の作業時間を引く
+        
         
 # 主な処理
     def operation_record_export(self, year_month_str):
