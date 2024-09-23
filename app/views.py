@@ -67,7 +67,7 @@ def confirm_master(request):
             if input_book:
                 make_csv = MakeCSV(input_book)
                 make_csv.operation_record_export(year_month)
-                make_csv.export_master_data_to_csv()
+                #make_csv.export_master_data_to_csv()
                 return redirect('output')  # 出力実行画面へ遷移
         elif 'edit_master' in request.POST:
             return redirect('master')  # マスタ設定画面へ遷移
