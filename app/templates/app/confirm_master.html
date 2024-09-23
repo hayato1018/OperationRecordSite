@@ -53,6 +53,7 @@
                         <th>プロジェクト番号</th>
                         <th>フェーズ番号</th>
                         <th>検索文字</th>
+                        <th>社内外作業フラグ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,6 +63,7 @@
                             <td>{{ item.project_number }}</td>
                             <td>{{ item.phase_number }}</td>
                             <td>{{ item.search_text }}</td>
+                            <td>{{ item.inhouse_work_flag|yesno:"社内作業,社外作業" }}</td>
                         </tr>
                     {% empty %}
                         <tr>

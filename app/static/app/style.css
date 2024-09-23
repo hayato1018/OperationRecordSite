@@ -59,6 +59,18 @@ textarea {
     border-radius: 5px;
 }
 
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #bdbdbd;
+    border-radius: 5px;
+    appearance: none;
+    /* ブラウザのデフォルトスタイルを消す */
+    background-color: #fff;
+    /* 背景色を白に設定 */
+}
+
 /* ヘッダーのリンク（ホームへ戻る） */
 .home-link {
     position: absolute;

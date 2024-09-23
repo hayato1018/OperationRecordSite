@@ -1,6 +1,6 @@
 import os
 from django.conf import settings
-from django.http import FileResponse,HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import MasterData
 from .forms import MasterForm
@@ -17,12 +17,7 @@ def master(request):
     if request.method == 'POST':
         form = MasterForm(request.POST)
         if form.is_valid():
-            MasterData.objects.create(
-                project_name=form.cleaned_data['project_name'],
-                project_number=form.cleaned_data['project_number'],
-                phase_number=form.cleaned_data['phase_number'],
-                search_text=form.cleaned_data['search_text'],
-            )
+            form.save()
             return redirect('master')
     else:
         form = MasterForm()

@@ -12,6 +12,15 @@
             flex: 1;
             padding-bottom: 150px; /* フッターの高さ分余白を確保 */
         }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #bdbdbd;
+            border-radius: 5px;
+            appearance: none; /* ブラウザのデフォルトスタイルを消す */
+            background-color: #fff; /* 背景色を白に設定 */
+        }
     </style>
 </head>
 <body>
@@ -27,6 +36,7 @@
             <form method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}
+
                 <button type="submit" class="btn">設定を保存</button>
             </form>
         </div>
@@ -42,6 +52,7 @@
                         <th>プロジェクト番号</th>
                         <th>フェーズ番号</th>
                         <th>検索文字</th>
+                        <th>社内外作業フラグ</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -52,6 +63,7 @@
                             <td>{{ item.project_number }}</td>
                             <td>{{ item.phase_number }}</td>
                             <td>{{ item.search_text }}</td>
+                            <td>{{ item.inhouse_work_flag|yesno:"社内作業,社外作業" }}</td>
                             <td>
                                 <a href="{% url 'edit_master' item.pk %}" class="btn">編集</a>
                                 <a href="{% url 'delete_master' item.pk %}" class="btn" onclick="return confirm('本当に削除しますか？')">削除</a>
