@@ -16,7 +16,7 @@
         <h1>マスタデータの確認</h1>
         {% if not internal_task_exists %}
             <div class="alert">
-                <p>(必須) プロジェクト名 : 社内雑務 をマスタ設定してください。</p>
+                <p>(必須) プロジェクト名 : 自社作業 をマスタ設定してください。</p>
             </div>
         {% endif %}
             <!-- ボタンで処理を分岐 -->
@@ -37,9 +37,9 @@
                     const fileInput = document.getElementById('file-input');
                     if (fileInput.files.length === 0 || !document.querySelector('input[type="month"]').value) {
                         alert('ファイルを選択・日付を指定してください。');
-                        return false;  // フォーム送信をキャンセル
+                        return false;
                     }
-                    return true;  // フォーム送信を許可
+                    return true;
                 }
             </script>
         <!-- マスタデータ一覧をテーブルで表示 -->

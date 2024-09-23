@@ -43,14 +43,14 @@ def edit_master(request, pk):
     else:
         form = MasterForm(instance=master)
 
-        if master.project_name == "社内雑務":
+        if master.project_name == "自社作業":
             form.fields['project_name'].widget.attrs['readonly'] = True
 
     return render(request, 'app/edit_master.html', {'form': form})
 
 # 確認画面のビュー
 def confirm_master(request):
-    internal_task_exists = MasterData.objects.filter(project_name="社内雑務").exists()
+    internal_task_exists = MasterData.objects.filter(project_name="自社作業").exists()
     master_list = MasterData.objects.all()
     if request.method == "POST":
         form = MasterForm(request.POST)
