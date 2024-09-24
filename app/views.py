@@ -11,6 +11,17 @@ from .controller.util import MakeCSV
 def home(request):
     return render(request, 'app/home.html')
 
+def download_sample(request):
+    file_path = os.path.join(settings.BASE_DIR, 'sample', 'sampledeta.xlsx')
+
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            response['Content-Disposition'] = f'attachment; filename="sampledeta.xlsx"'
+            return response
+    else:
+        return HttpResponse("サンプルデータが存在しません。")
+
 # マスタ設定画面のビュー
 def master(request):
     master_list = MasterData.objects.all()
