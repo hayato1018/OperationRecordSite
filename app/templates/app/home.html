@@ -7,13 +7,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ホーム画面</title>
     <link rel="stylesheet" href="{% static 'app/style.css' %}">
+    <style>
+        .container {
+            text-align: center;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-large {
+            flex: 1; /* ボタンを均等に広げる */
+            padding: 20px;
+            font-size: 18px;
+            text-align: center;
+            background-color: #80deea;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 0 10px;
+        }
+
+        .btn-large:hover {
+            background-color: #4dd0e1;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>ホーム画面</h1>
-        <p>マスタ設定画面や出力実行画面へ遷移するボタンを配置します。</p>
-        <a href="{% url 'master' %}" class="btn">マスタ設定画面へ</a>
-        <a href="{% url 'confirm_master' %}" class="btn">出力実行画面へ</a>
+        <p>稼働実績から工数を算出したCSVを作成</p>
+
+        <!-- ボタンを左右に配置するためのラッパー -->
+        <div class="button-container">
+            <a href="{% url 'master' %}" class="btn-large">マスタ設定画面へ</a>
+            <a href="{% url 'confirm_master' %}" class="btn-large">出力実行画面へ</a>
+        </div>
     </div>
 
     <footer>
