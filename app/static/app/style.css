@@ -2,9 +2,7 @@
 body {
     font-family: 'Arial', sans-serif;
     background-color: #e0f7fa;
-    /* 背景色: 薄いブルー */
     color: #333;
-    /* テキスト: 濃いグレー */
     margin: 0;
     padding: 0;
 }
@@ -20,14 +18,12 @@ body {
 h1,
 h2 {
     color: #00796b;
-    /* タイトル: 濃い緑 */
 }
 
 /* ボタン */
 button,
 .btn {
     background-color: #80deea;
-    /* ボタン: ライトグリーン */
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -40,20 +36,17 @@ button,
 button:hover,
 .btn:hover {
     background-color: #4dd0e1;
-    /* ボタン: ホバー時の色 */
 }
 
 /* リンク */
 a {
     color: #7b1fa2;
-    /* リンク: パープル */
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 a:hover {
     color: #4a148c;
-    /* リンク: ホバー時の色 */
 }
 
 /* フォーム */
@@ -64,6 +57,18 @@ textarea {
     margin: 10px 0;
     border: 1px solid #bdbdbd;
     border-radius: 5px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #bdbdbd;
+    border-radius: 5px;
+    appearance: none;
+    /* ブラウザのデフォルトスタイルを消す */
+    background-color: #fff;
+    /* 背景色を白に設定 */
 }
 
 /* ヘッダーのリンク（ホームへ戻る） */
@@ -128,14 +133,12 @@ table thead th {
     color: #333;
     text-align: left;
     padding: 15px 20px;
-    /* パディングを広げる */
     border-bottom: 2px solid #ddd;
 }
 
 /* テーブルボディのスタイル */
 table tbody td {
     padding: 15px 20px;
-    /* パディングを広げる */
     border-bottom: 1px solid #ddd;
 }
 
@@ -153,6 +156,10 @@ table tbody tr:hover {
 .list-container {
     max-width: 1200px;
     margin: 0 auto;
+    max-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding: 10px;
 }
 
 /* テーブル内のテキストスタイル */
@@ -163,4 +170,29 @@ table tbody td {
 /* ヘッダーを強調 */
 table thead th {
     font-weight: bold;
+}
+
+/* ダウンロードボタンを大きめにするスタイル */
+.btn-large {
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-large:hover {
+    background-color: #45a049;
+}
+
+/* アラートメッセージのスタイル */
+.alert {
+    background-color: #ffdddd;
+    color: #d8000c;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #d8000c;
+    border-radius: 5px;
 }

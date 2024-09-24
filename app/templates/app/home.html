@@ -7,15 +7,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ホーム画面</title>
     <link rel="stylesheet" href="{% static 'app/style.css' %}">
+    <style>
+        .home-container {
+            text-align: center;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-large-home {
+            flex: 1;
+            padding: 20px;
+            font-size: 18px;
+            text-align: center;
+            background-color: #80deea;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 0 10px;
+        }
+
+        .btn-large-home:hover {
+            background-color: #4dd0e1;
+        }
+
+        .btn-sample {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 18px;
+            text-align: center;
+            background-color: #ffca28;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .btn-sample:hover {
+            background-color: #ffb300;
+        }
+    </style>
 </head>
 <body>
-    <!--a href="{% url 'home' %}" class="home-link">ホームへ戻る</a-->
-
-    <div class="container">
+    <div class="home-container">
         <h1>ホーム画面</h1>
-        <p>マスタ設定画面や出力実行画面へ遷移するボタンを配置します。</p>
-        <a href="{% url 'master' %}" class="btn">マスタ設定画面へ</a>
-        <a href="{% url 'confirm_master' %}" class="btn">出力実行画面へ</a>
+        <h2>稼働実績から工数を算出したCSVを作成</h2>
+
+        <div class="button-container">
+            <a href="{% url 'master' %}" class="btn-large-home">マスタ設定画面へ</a>
+            <a href="{% url 'confirm_master' %}" class="btn-large-home">出力実行画面へ</a>
+        </div>
+
+        <a href="{% url 'download_sample' %}" class="btn-sample">サンプルをダウンロード</a>
     </div>
 
     <footer>

@@ -14,43 +14,56 @@
 
     <div class="container">
         <h1>マスタデータの確認</h1>
+        {% if not internal_task_exists %}
+            <div class="alert">
+                <p>(必須) プロジェクト名 : 自社作業 をマスタ設定してください。</p>
+            </div>
+        {% endif %}
             <!-- ボタンで処理を分岐 -->
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <input type="file" name="file" id="file-input">
-                <button type="submit" name="output" class="btn" onclick="return validateFile()">出力する</button>
+                {{ form.as_p }}
+                <input type="file" name="input_book" id="file-input" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                <input type="month" name="year_month"><br><br>
+                {% if internal_task_exists %}
+                    <button type="submit" name="output" class="btn" onclick="return validateFile()">出力する</button>
+                {% endif %}
                 <button type="submit" name="edit_master" class="btn">マスタ設定へ</button>
             </form>
-            
+
             <script>
                 // 「出力する」ボタンのときにのみファイル選択を確認
                 function validateFile() {
                     const fileInput = document.getElementById('file-input');
-                    if (fileInput.files.length === 0) {
-                        alert('ファイルを選択してください。');
-                        return false;  // フォーム送信をキャンセル
+                    if (fileInput.files.length === 0 || !document.querySelector('input[type="month"]').value) {
+                        alert('ファイルを選択・日付を指定してください。');
+                        return false;
                     }
-                    return true;  // フォーム送信を許可
+                    return true;
                 }
             </script>
         <!-- マスタデータ一覧をテーブルで表示 -->
         <div class="list-container">
             <h2>登録されているマスタ情報一覧</h2>
-        
+
             <table>
                 <thead>
                     <tr>
+                        <th>プロジェクト名</th>
                         <th>プロジェクト番号</th>
                         <th>フェーズ番号</th>
                         <th>検索文字</th>
+                        <th>社内外作業フラグ</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in master_list %}
                         <tr>
+                            <td>{{ item.project_name }}</td>
                             <td>{{ item.project_number }}</td>
                             <td>{{ item.phase_number }}</td>
                             <td>{{ item.search_text }}</td>
+                            <td>{{ item.inhouse_work_flag|yesno:"社内作業,社外作業" }}</td>
                         </tr>
                     {% empty %}
                         <tr>

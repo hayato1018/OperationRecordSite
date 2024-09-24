@@ -10,11 +10,16 @@
 </head>
 
 <body>
-    <!-- ホームへ戻るリンク -->
-    <a href="{% url 'home' %}" class="home-link">ホームへ戻る</a> 
+    <a href="{% url 'home' %}" class="home-link">ホームへ戻る</a>
     <div class="container">
         <h1>出力実行画面</h1>
-        <p>ここに出力実行の内容を表示します。</p>
+        <div class="container">
+            <h1>CSVファイルのダウンロード</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-large">CSVファイルをダウンロード</button>
+            </form>
+        </div>
     </div>
 
     <footer>
