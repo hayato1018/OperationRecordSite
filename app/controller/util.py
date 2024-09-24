@@ -1,19 +1,14 @@
-import csv
+# import csv
 import os
 from django.conf import settings
-from django.http import HttpResponse
+# from django.http import HttpResponse
 import openpyxl.utils
 from ..models import MasterData
 import openpyxl
 from datetime import datetime
 
-# 入力ファイル、ワークブック、ワークシートの初期化
-# input_book = None
-# wb = None
-# ws = None
-
 class MakeCSV:
-    
+
     def __init__(self, input_book):
         self.master_list = MasterData.objects.all()
         self.input_book = input_book
@@ -23,20 +18,6 @@ class MakeCSV:
         self.total_work_days_row = 0
         self.search_text_dict = {}
         self.inhouse_work_times = 0
-
-    def export_master_data_to_csv(self):
-        output_dir = os.path.join(settings.BASE_DIR, 'output')
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
-        
-        # file_path = os.path.join(output_dir, 'master_data.csv')
-        
-        # with open(file_path, mode='w', newline='', encoding='utf-8') as file:
-        #     writer = csv.writer(file)
-        #     writer.writerow(['プロジェクト名', 'プロジェクト番号', 'フェーズ番号', '検索文字'])
-            
-        #     for data in MasterData.objects.all():
-        #         writer.writerow([data.project_name, data.project_number, data.phase_number, data.search_text])
 
     # '01'の列を検索して、その列番号を返す
     def search_start_date_col(self, keyword):
@@ -79,6 +60,7 @@ class MakeCSV:
                     elif col.value == "合計":
                         self.total_work_days_row = col.row
 
+    # search_text_dictの値を更新
     def update_search_text_dict(self, row, col, order_no):
         time_cell = self.ws.cell(row, col).value
         if time_cell is None:
@@ -91,57 +73,21 @@ class MakeCSV:
         else:
             self.search_text_dict[order_no][4] = time_cell
 
+    # CSVレコードを作成
     def create_csv_record(self, work_day):
+        work_day_str = work_day.strftime('%Y/%m/%d')
         for key, value in self.search_text_dict.items():
             if value[4] == 0:
                 continue
             if value[0] != "自社作業":
-                self.operation_record.append(f'{work_day},{key},,{value[1]},,{value[4]},,,,,,,,,,,,,,')
+                self.operation_record.append(f'{work_day_str},{key},,{value[1]},,{value[4]},,,,,,,,,,,,,,')
             else:
                 value[4] += self.inhouse_work_times
-                self.operation_record.append(f'{work_day},{key},,{value[1]},,{value[4]},,,,,,,,,,,,,,')
+                self.operation_record.append(f'{work_day_str},{key},,{value[1]},,{value[4]},,,,,,,,,,,,,,')
                 self.inhouse_work_times = 0
         for key, value in self.search_text_dict.items():
             value[4] = 0
 
-    def create_csv_rows(self, row, col, work_day, order_no, phase_no, inhouse_work_flag):
-        work_day_str = work_day.strftime('%Y/%m/%d')
-        time_cell = self.ws.cell(row, col).value
-
-        if time_cell is None:
-            return
-        
-        # 自社作業以外の場合（社外作業）
-        if not inhouse_work_flag:
-            record =  f'{work_day_str},{order_no},,{phase_no},,{time_cell},,,,,,,,,,,,,,'
-        elif inhouse_work_flag and order_no != self.master_list.filter(project_name='自社作業').first().project_number:
-            self.operation_record.append(record)
-            self.inhouse_work_times -= time_cell
-            record =  f'{work_day_str},{order_no},,{phase_no},,{time_cell},,,,,,,,,,,,,,'
-            self.operation_record.append(record)
-        else:
-            self.inhouse_work_times += time_cell
-
-        # 自社作業の場合（減算処理を考慮）
-        # else:
-        #     # 自社作業用のプロジェクト番号を取得
-        #     inhouse_project_number = self.master_list.filter(project_name='自社作業').first().project_number
-
-        #     # 他のプロジェクトの作業時間を減算
-        #     for master_data in self.master_list:
-        #         if master_data.project_number != inhouse_project_number:
-        #             # 他のプロジェクトの作業時間がある場合は減算
-        #             if order_no == master_data.project_number and time_cell:
-        #                 inhouse_work_times -= time_cell
-
-        #     # 自社作業の時間として加算
-        #     inhouse_work_times += time_cell
-
-        #     # 自社作業の記録を追加
-        #     record = f'{work_day_str},{order_no},,{phase_no},,{inhouse_work_times},,,,,,,,,,,,,,'
-        #     self.operation_record.append(record)
-        
-        
 # 主な処理
     def operation_record_export(self, year_month_str):
         year_month = datetime.strptime(year_month_str, '%Y-%m').strftime('%Y_%m')
@@ -157,11 +103,7 @@ class MakeCSV:
             # search_text_dictにあるデータ分をCSVに書き込む
             for key, value in self.search_text_dict.items():
                 self.update_search_text_dict(value[2], col, key)
-            print(self.search_text_dict)
             self.create_csv_record(work_day)
-            # self.inhouse_work_times = 0
-            # for key, value in self.search_text_dict.items():
-            #     value[4] = 0
 
         # CSVファイルを作成
         output_dir = os.path.join(settings.BASE_DIR, 'output')

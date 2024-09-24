@@ -10,14 +10,11 @@
 </head>
 
 <body>
-    <!-- ホームへ戻るリンク -->
     <a href="{% url 'home' %}" class="home-link">ホームへ戻る</a> 
     <div class="container">
         <h1>出力実行画面</h1>
         <div class="container">
             <h1>CSVファイルのダウンロード</h1>
-    
-            <!-- 大きめのCSVダウンロードボタン -->
             <form method="POST">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-large">CSVファイルをダウンロード</button>
