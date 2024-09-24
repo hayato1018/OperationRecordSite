@@ -7,6 +7,248 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>マスタデータ確認</title>
     <link rel="stylesheet" href="{% static 'app/style.css' %}">
+    <style>
+        .home-container {
+            text-align: center;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-large-home {
+            flex: 1;
+            padding: 20px;
+            font-size: 18px;
+            text-align: center;
+            background-color: #80deea;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 0 10px;
+        }
+
+        .btn-large-home:hover {
+            background-color: #4dd0e1;
+        }
+
+        .btn-sample {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 18px;
+            text-align: center;
+            background-color: #ffca28;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .btn-sample:hover {
+            background-color: #ffb300;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e0f7fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* コンテナ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* ヘッダー */
+        h1,
+        h2 {
+            color: #00796b;
+        }
+        
+        /* ボタン */
+        button,
+        .btn {
+            background-color: #80deea;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover,
+        .btn:hover {
+            background-color: #4dd0e1;
+        }
+        
+        /* リンク */
+        a {
+            color: #7b1fa2;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        a:hover {
+            color: #4a148c;
+        }
+        
+        /* フォーム */
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #bdbdbd;
+            border-radius: 5px;
+        }
+        
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #bdbdbd;
+            border-radius: 5px;
+            appearance: none;
+            /* ブラウザのデフォルトスタイルを消す */
+            background-color: #fff;
+            /* 背景色を白に設定 */
+        }
+        
+        /* ヘッダーのリンク（ホームへ戻る） */
+        .home-link {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            text-decoration: none;
+            background-color: #80deea;
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 14px;
+        }
+        
+        .home-link:hover {
+            background-color: #4dd0e1;
+        }
+        
+        /* テキストリスト */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            background-color: #ffffff;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        li a {
+            margin-left: 10px;
+        }
+        
+        /* フッター */
+        footer {
+            background-color: #00796b;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        
+        /* テーブルの全体スタイル */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1.2em;
+            font-family: 'Arial', sans-serif;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* テーブルヘッダーのスタイル */
+        table thead th {
+            background-color: #f2f2f2;
+            color: #333;
+            text-align: left;
+            padding: 15px 20px;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        /* テーブルボディのスタイル */
+        table tbody td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        /* テーブルの行に交互に背景色をつける */
+        table tbody tr:nth-of-type(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* テーブル行のホバー時のスタイル */
+        table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        
+        /* テーブル全体を中央に揃える */
+        .list-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            max-height: 500px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+        
+        /* テーブル内のテキストスタイル */
+        table tbody td {
+            color: #555;
+        }
+        
+        /* ヘッダーを強調 */
+        table thead th {
+            font-weight: bold;
+        }
+        
+        /* ダウンロードボタンを大きめにするスタイル */
+        .btn-large {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .btn-large:hover {
+            background-color: #45a049;
+        }
+        
+        /* アラートメッセージのスタイル */
+        .alert {
+            background-color: #ffdddd;
+            color: #d8000c;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #d8000c;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <!-- ホームへ戻るリンク -->
