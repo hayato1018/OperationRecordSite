@@ -1,4 +1,5 @@
 import os
+import glob
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -80,20 +81,24 @@ def confirm_master(request):
 def output(request):
     if request.method == 'POST':
         output_dir = os.path.join(settings.BASE_DIR, 'output')
-        file_path = os.path.join(output_dir, 'master_data.csv')  # ファイル名は既に作成されたものを想定
+        csv_files = glob.glob(os.path.join(output_dir, '*.csv'))
+        if csv_files:
+            file_path = csv_files[0]
+        else:
+            return HttpResponse("CSVファイルが存在しません。")
+
         if os.path.exists(file_path):
-            # ダウンロード用のレスポンスを作成
             response = HttpResponse(
                 open(file_path, 'rb').read(),
                 content_type='text/csv'
             )
             response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
 
-            os.remove(file_path)
+            for csv_file in csv_files:
+                os.remove(csv_file)
 
             return response
         else:
-            # ファイルが存在しない場合のエラーメッセージ
             return HttpResponse("CSVファイルが存在しません。")
 
     # POSTリクエストでない場合の通常画面表示

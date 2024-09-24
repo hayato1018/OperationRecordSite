@@ -1,7 +1,5 @@
-# import csv
 import os
 from django.conf import settings
-# from django.http import HttpResponse
 import openpyxl.utils
 from ..models import MasterData
 import openpyxl
@@ -91,6 +89,7 @@ class MakeCSV:
 # 主な処理
     def operation_record_export(self, year_month_str):
         year_month = datetime.strptime(year_month_str, '%Y-%m').strftime('%Y_%m')
+        csv_file_name = f'Work_{year_month}.csv'
         start_date_col = self.search_start_date_col('01')
         start_date_row = self.search_start_date_row('01')
         self.get_search_text_dict()
@@ -109,7 +108,7 @@ class MakeCSV:
         output_dir = os.path.join(settings.BASE_DIR, 'output')
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
-        file_path = os.path.join(output_dir, 'master_data.csv')
+        file_path = os.path.join(output_dir, csv_file_name)
         with open(file_path, 'w') as file:
             for record in self.operation_record:
                 file.write("%s\n" % record)
